@@ -2,16 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Models\Product as ProductModel;
+use Illuminate\Support\Facades\DB;
 use Src\Domain\Entities\Product;
 use Src\Application\Repositories\ProductRepository;
 use Src\Domain\ValueObjects\ProductId;
 
-class ProductModelRepository implements ProductRepository
+class ProductQueryBuilderRepository implements ProductRepository
 {
     public function findById(ProductId $productId): ?Product
     {
-        $productModel = ProductModel::query()->find($productId->getValue());
+        $productModel = DB::table('products')->find($productId->getValue());
 
         if (is_null($productModel)) {
             return null;
@@ -22,26 +22,27 @@ class ProductModelRepository implements ProductRepository
 
     public function save(Product $product): void
     {
-        $productModel = $this->toModel($product);
-
-        $productModel->save();
+        DB::table('products')
+            ->upsert(
+                values: $this->toArray($product),
+                uniqueBy: ['id'],
+                update: ['name']
+            );
     }
 
-    private function toModel(Product $product): ProductModel
+    private function toArray(Product $product): array
     {
-        $productModel = new ProductModel([
+        return [
             'id' => $product->getId(),
             'name' => $product->getName(),
-        ]);
-
-        return $productModel;
+        ];
     }
 
-    private function toEntity(ProductModel $productModel): Product
+    private function toEntity(object $product): Product
     {
         return Product::restore(
-            id: $productModel->id,
-            name: $productModel->name,
+            id: $product->id,
+            name: $product->name,
         );
     }
 }

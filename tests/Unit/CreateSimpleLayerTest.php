@@ -5,7 +5,7 @@ use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayerInpu
 use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayerOutput;
 use Src\Domain\Entities\Layer;
 use Src\Domain\Exceptions\LayerAlreadExistsException;
-use Src\Domain\Repositories\LayerRepository;
+use Src\Application\Repositories\LayerRepository;
 
 test('Deve criar uma layer base', function () {
     $input = new CreateSimpleLayerInput(

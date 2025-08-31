@@ -11,9 +11,9 @@ use Src\Domain\Enums\LayerType;
 use Src\Domain\Exceptions\LayerNotFoundException;
 use Src\Domain\Exceptions\PriceAlreadExistsException;
 use Src\Domain\Exceptions\ProductNotFoundException;
-use Src\Domain\Repositories\LayerRepository;
-use Src\Domain\Repositories\PriceRepository;
-use Src\Domain\Repositories\ProductRepository;
+use Src\Application\Repositories\LayerRepository;
+use Src\Application\Repositories\PriceRepository;
+use Src\Application\Repositories\ProductRepository;
 use Src\Domain\ValueObjects\LayerId;
 use Src\Domain\ValueObjects\ProductId;
 

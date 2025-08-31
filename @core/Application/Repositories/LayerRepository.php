@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Src\Domain\Repositories;
+namespace Src\Application\Repositories;
 
 use Src\Domain\Entities\Layer;
 use Src\Domain\Enums\LayerType;

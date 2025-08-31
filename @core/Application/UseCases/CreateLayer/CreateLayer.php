@@ -10,7 +10,7 @@ use Src\Application\UseCases\CreateLayer\CreateDiscountLayer\CreateDiscountLayer
 use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayer;
 use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayerInput;
 use Src\Domain\Enums\LayerType;
-use Src\Domain\Repositories\LayerRepository;
+use Src\Application\Repositories\LayerRepository;
 
 class CreateLayer
 {

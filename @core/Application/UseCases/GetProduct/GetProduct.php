@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Src\Application\UseCases\GetProduct;
 
 use Src\Domain\Exceptions\ProductNotFoundException;
-use Src\Domain\Repositories\ProductRepository;
+use Src\Application\Repositories\ProductRepository;
 use Src\Domain\ValueObjects\ProductId;
 
 class GetProduct

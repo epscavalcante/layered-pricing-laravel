@@ -14,9 +14,9 @@ use Src\Domain\Enums\DiscountType;
 use Src\Domain\Enums\LayerType;
 use Src\Domain\Exceptions\LayerNotFoundException;
 use Src\Domain\Exceptions\PriceNotFoundException;
-use Src\Domain\Repositories\LayerRepository;
-use Src\Domain\Repositories\PriceRepository;
-use Src\Domain\Repositories\ProductRepository;
+use Src\Application\Repositories\LayerRepository;
+use Src\Application\Repositories\PriceRepository;
+use Src\Application\Repositories\ProductRepository;
 use Src\Domain\ValueObjects\ProductId;
 
 test('Deve criar um preço com desconto', function () {
@@ -29,8 +29,8 @@ test('Deve criar um preço com desconto', function () {
         discountType: DiscountType::FIXED->value,
         discountValue: 15
     );
-    
-    
+
+
     $layerRepository = Mockery::mock(LayerRepository::class);
     // pro usecase
     $layerRepository->shouldReceive('findByIdAndType')
@@ -41,7 +41,7 @@ test('Deve criar um preço com desconto', function () {
     $layerRepository->shouldReceive('findById')
         ->once()
         ->andReturn($discountLayer);
-    
+
     // pro priceCalculator
     $product = Product::create(
         name: 'Produto'
@@ -101,7 +101,7 @@ test('Deve falhar ao usar uma layer base para criar um preço com desconto', fun
     $discountLayer = Layer::create(
         code: 'discountLayer',
     );
-    
+
     $layerRepository = Mockery::mock(LayerRepository::class);
     // pro usecase
     $layerRepository->shouldReceive('findByIdAndType')
@@ -110,7 +110,7 @@ test('Deve falhar ao usar uma layer base para criar um preço com desconto', fun
 
     // pro priceCreator
     $layerRepository->shouldNotReceive('findById');
-    
+
     // pro priceCalculator
     $product = Product::create(
         name: 'Produto'
@@ -166,7 +166,7 @@ test('Deve falhar retornar uma layer de desconto sem uma layer base', function (
         discountType: DiscountType::PERCENTAGE->value,
         discountValue: 20,
     );
-    
+
     $layerRepository = Mockery::mock(LayerRepository::class);
     // pro usecase
     $layerRepository->shouldReceive('findByIdAndType')
@@ -175,7 +175,7 @@ test('Deve falhar retornar uma layer de desconto sem uma layer base', function (
 
     // pro priceCreator
     $layerRepository->shouldNotReceive('findById');
-    
+
     // pro priceCalculator
     $product = Product::create(
         name: 'Produto'
@@ -229,7 +229,7 @@ test('Deve falhar ao não encontrar o preço da layer base da layer de desconto'
         discountType: DiscountType::PERCENTAGE->value,
         discountValue: 20,
     );
-    
+
     $layerRepository = Mockery::mock(LayerRepository::class);
     // pro usecase
     $layerRepository->shouldReceive('findByIdAndType')
@@ -238,7 +238,7 @@ test('Deve falhar ao não encontrar o preço da layer base da layer de desconto'
 
     // pro priceCreator
     $layerRepository->shouldNotReceive('findById');
-    
+
     // pro priceCalculator
     $product = Product::create(
         name: 'Produto'

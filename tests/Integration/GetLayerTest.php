@@ -8,7 +8,7 @@ use Src\Domain\Entities\Layer;
 use Src\Domain\Enums\DiscountType;
 use Src\Domain\Enums\LayerType;
 use Src\Domain\Exceptions\LayerNotFoundException;
-use Src\Domain\Repositories\LayerRepository;
+use Src\Application\Repositories\LayerRepository;
 use Src\Domain\ValueObjects\LayerId;
 
 beforeEach(function () {

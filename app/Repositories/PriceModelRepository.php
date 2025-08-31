@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Price as PriceModel;
 use Src\Domain\Entities\Price;
-use Src\Domain\Repositories\PriceRepository;
+use Src\Application\Repositories\PriceRepository;
 use Src\Domain\ValueObjects\LayerId;
 use Src\Domain\ValueObjects\PriceId;
 use Src\Domain\ValueObjects\ProductId;

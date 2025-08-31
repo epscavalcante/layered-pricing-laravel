@@ -7,7 +7,7 @@ use Src\Domain\Entities\Layer;
 use Src\Domain\Enums\DiscountType;
 use Src\Domain\Exceptions\LayerAlreadExistsException;
 use Src\Domain\Exceptions\LayerNotFoundException;
-use Src\Domain\Repositories\LayerRepository;
+use Src\Application\Repositories\LayerRepository;
 use Src\Domain\ValueObjects\LayerId;
 
 test('Deve criar uma layer de desconto', function () {

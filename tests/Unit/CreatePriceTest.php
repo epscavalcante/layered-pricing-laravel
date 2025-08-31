@@ -6,9 +6,9 @@ use Src\Application\UseCases\CreatePrice\CreatePriceInput;
 use Src\Application\UseCases\CreatePrice\CreatePriceOutput;
 use Src\Domain\Entities\Layer;
 use Src\Domain\Entities\Product;
-use Src\Domain\Repositories\LayerRepository;
-use Src\Domain\Repositories\PriceRepository;
-use Src\Domain\Repositories\ProductRepository;
+use Src\Application\Repositories\LayerRepository;
+use Src\Application\Repositories\PriceRepository;
+use Src\Application\Repositories\ProductRepository;
 
 test('Deve criar um preço', function () {
     $layer = Layer::create(

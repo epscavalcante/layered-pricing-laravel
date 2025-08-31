@@ -6,7 +6,7 @@ namespace Src\Application\UseCases\CreateLayer\CreateSimpleLayer;
 
 use Src\Domain\Entities\Layer;
 use Src\Domain\Exceptions\LayerAlreadExistsException;
-use Src\Domain\Repositories\LayerRepository;
+use Src\Application\Repositories\LayerRepository;
 
 class CreateSimpleLayer
 {

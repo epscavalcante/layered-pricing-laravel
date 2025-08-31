@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Src\Application\UseCases\GetPrice;
 
 use Src\Domain\Exceptions\PriceNotFoundException;
-use Src\Domain\Repositories\PriceRepository;
+use Src\Application\Repositories\PriceRepository;
 use Src\Domain\ValueObjects\PriceId;
 
 class GetPrice

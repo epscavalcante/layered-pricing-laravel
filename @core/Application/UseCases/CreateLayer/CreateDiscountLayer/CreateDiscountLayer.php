@@ -7,7 +7,7 @@ namespace Src\Application\UseCases\CreateLayer\CreateDiscountLayer;
 use Src\Domain\Entities\Layer;
 use Src\Domain\Exceptions\LayerAlreadExistsException;
 use Src\Domain\Exceptions\LayerNotFoundException;
-use Src\Domain\Repositories\LayerRepository;
+use Src\Application\Repositories\LayerRepository;
 use Src\Domain\ValueObjects\LayerId;
 
 class CreateDiscountLayer

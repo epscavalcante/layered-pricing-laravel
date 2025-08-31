@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Src\Application\UseCases\GetLayer;
 
 use Src\Domain\Exceptions\LayerNotFoundException;
-use Src\Domain\Repositories\LayerRepository;
+use Src\Application\Repositories\LayerRepository;
 use Src\Domain\ValueObjects\LayerId;
 
 class GetLayer

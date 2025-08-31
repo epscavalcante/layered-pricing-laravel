@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Src\Domain\Repositories;
+namespace Src\Application\Repositories;
 
 use Src\Domain\Entities\Price;
 use Src\Domain\ValueObjects\LayerId;
