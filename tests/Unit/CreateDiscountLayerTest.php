@@ -1,8 +1,8 @@
 <?php
 
-use Src\Application\UseCases\CreateDiscountLayer\CreateDiscountLayer;
-use Src\Application\UseCases\CreateDiscountLayer\CreateDiscountLayerInput;
-use Src\Application\UseCases\CreateDiscountLayer\CreateDiscountLayerOutput;
+use Src\Application\UseCases\CreateLayer\CreateDiscountLayer\CreateDiscountLayer;
+use Src\Application\UseCases\CreateLayer\CreateDiscountLayer\CreateDiscountLayerInput;
+use Src\Application\UseCases\CreateLayer\CreateDiscountLayer\CreateDiscountLayerOutput;
 use Src\Domain\Entities\Layer;
 use Src\Domain\Enums\DiscountType;
 use Src\Domain\Exceptions\LayerAlreadExistsException;

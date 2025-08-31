@@ -1,8 +1,8 @@
 <?php
 
-use Src\Application\UseCases\CreateSimpleLayer\CreateSimpleLayer;
-use Src\Application\UseCases\CreateSimpleLayer\CreateSimpleLayerInput;
-use Src\Application\UseCases\CreateSimpleLayer\CreateSimpleLayerOutput;
+use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayer;
+use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayerInput;
+use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayerOutput;
 use Src\Domain\Entities\Layer;
 use Src\Domain\Exceptions\LayerAlreadExistsException;
 use Src\Domain\Repositories\LayerRepository;

@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDiscountLayerRequest;
-use App\Http\Requests\StoreSimpleLayerRequest;
+use App\Http\Requests\CreateLayerRequest;
 use Illuminate\Http\JsonResponse;
-use Src\Application\UseCases\CreateDiscountLayer\CreateDiscountLayer;
-use Src\Application\UseCases\CreateDiscountLayer\CreateDiscountLayerInput;
-use Src\Application\UseCases\CreateSimpleLayer\CreateSimpleLayer;
-use Src\Application\UseCases\CreateSimpleLayer\CreateSimpleLayerInput;
+use Src\Application\UseCases\CreateLayer\CreateDiscountLayer\CreateDiscountLayer;
+use Src\Application\UseCases\CreateLayer\CreateLayer;
+use Src\Application\UseCases\CreateLayer\CreateLayerInput;
+use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayer;
 use Src\Application\UseCases\GetLayer\GetLayer;
 use Src\Application\UseCases\GetLayer\GetLayerInput;
 
@@ -16,6 +15,7 @@ class LayerController extends Controller
 {
     public function __construct(
         private readonly GetLayer $getLayerUseCase,
+        private readonly CreateLayer $createLayerUseCase,
         private readonly CreateSimpleLayer $createSimpleLayerUseCase,
         private readonly CreateDiscountLayer $createDiscountLayerUseCase,
     ) {}
@@ -41,38 +41,21 @@ class LayerController extends Controller
         );
     }
 
-    public function storeSimple(StoreSimpleLayerRequest $request): JsonResponse
+    public function store(CreateLayerRequest $request): JsonResponse
     {
-        $input = new CreateSimpleLayerInput(
-            code: $request->validated('code'),
-        );
-        $output = $this->createSimpleLayerUseCase->execute(
-            input: $input,
-        );
-        return response()->json(
-            status: 201,
-            data: [
-                'layer_id' => $output->layerId,
-            ]
-        );
-    }
-
-    public function storeDiscount(StoreDiscountLayerRequest $request): JsonResponse
-    {
-        $input = new CreateDiscountLayerInput(
-            layerId: $request->validated('parent_id'),
+        $input = new CreateLayerInput(
             code: $request->validated('code'),
             type: $request->validated('type'),
-            value: $request->validated('value')
+            layerId: $request->validated('layer_id'),
+            discountType: $request->validated('discount_type'),
+            discountValue: $request->validated('discount_value'),
         );
-        $output = $this->createDiscountLayerUseCase->execute(
+        $output = $this->createLayerUseCase->execute(
             input: $input,
         );
         return response()->json(
             status: 201,
-            data: [
-                'layer_id' => $output->layerId,
-            ]
+            data: ['layer_id' => $output->layerId]
         );
     }
 }

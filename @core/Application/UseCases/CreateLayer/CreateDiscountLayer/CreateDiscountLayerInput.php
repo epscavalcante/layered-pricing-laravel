@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Src\Application\UseCases\CreateDiscountLayer;
+namespace Src\Application\UseCases\CreateLayer\CreateDiscountLayer;
 
 readonly class CreateDiscountLayerInput
 {

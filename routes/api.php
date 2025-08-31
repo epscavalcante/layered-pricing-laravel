@@ -18,6 +18,7 @@ Route::controller(LayerController::class)
     ->name('layers.')
     ->group(function () {
         Route::get('/{layer_id}', 'show')->name('show');
+        Route::post('/', 'store')->name('store');
         Route::post('/simple', 'storeSimple')->name('store_simple');
         Route::post('/discount', 'storeDiscount')->name('store_discount');
     });
