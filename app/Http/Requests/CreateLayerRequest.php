@@ -32,12 +32,25 @@ class CreateLayerRequest extends FormRequest
                 Rule::in(LayerType::cases()),
             ],
             'layer_id' => [
-                Rule::requiredIf($this->type === LayerType::DISCOUNT->value),
-                'string'
+                Rule::when(
+                    condition: $this->type === LayerType::DISCOUNT->value,
+                    rules: [
+                        'required',
+                        'string',
+                    ],
+                    defaultRules: ['nullable']
+                )
             ],
             'discount_type' => [
-                Rule::requiredIf($this->type === LayerType::DISCOUNT->value),
-                Rule::in(DiscountType::cases())
+                Rule::when(
+                    condition: $this->type === LayerType::DISCOUNT->value,
+                    rules: [
+                        'required',
+                        'string',
+                        Rule::in(DiscountType::cases())
+                    ],
+                    defaultRules: ['nullable']
+                )
             ],
             'discount_value' => [
                 Rule::when(

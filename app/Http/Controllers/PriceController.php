@@ -12,9 +12,41 @@ use Src\Application\UseCases\CreatePrice\CreatePrice;
 use Src\Application\UseCases\CreatePrice\CreatePriceInput;
 use Src\Application\UseCases\GetPrice\GetPrice;
 use Src\Application\UseCases\GetPrice\GetPriceInput;
+use Src\Application\UseCases\ListPrices\ListPrices;
+use Src\Application\UseCases\ListPrices\ListPricesInput;
 
 class PriceController extends Controller
 {
+    public function list(Request $request, ListPrices $useCase): JsonResponse
+    {
+        $input = new ListPricesInput(
+            productIds: $request->input('product_ids'),
+            layerIds: $request->input('layer_ids'),
+            page: $request->input('page'),
+            perPage: $request->input('per_page'),
+            sortBy: $request->input('sort_by'),
+            sortDirection: $request->input('sort_direction'),
+        );
+        $output = $useCase->execute(
+            input: $input
+        );
+        return response()->json(
+            status: 200,
+            data: [
+                'total' => $output->total,
+                'items' => array_map(
+                    callback: fn($item) => [
+                        'price_id' => $item->priceId,
+                        'layer_id' => $item->layerId,
+                        'product_id' => $item->productId,
+                        'value' => $item->value,
+                    ],
+                    array: $output->items
+                )
+            ]
+        );
+    }
+
     public function show(string $priceId, GetPrice $useCase): JsonResponse
     {
         $input = new GetPriceInput(
