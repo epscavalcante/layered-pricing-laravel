@@ -1,14 +1,14 @@
 <?php
 
+use Src\Application\Repositories\LayerRepository;
+use Src\Application\Repositories\PriceRepository;
+use Src\Application\Repositories\ProductRepository;
 use Src\Application\Services\PriceCreatorService;
 use Src\Application\UseCases\CreatePrice\CreatePrice;
 use Src\Application\UseCases\CreatePrice\CreatePriceInput;
 use Src\Application\UseCases\CreatePrice\CreatePriceOutput;
 use Src\Domain\Entities\Layer;
 use Src\Domain\Entities\Product;
-use Src\Application\Repositories\LayerRepository;
-use Src\Application\Repositories\PriceRepository;
-use Src\Application\Repositories\ProductRepository;
 
 test('Deve criar um preço', function () {
     $layer = Layer::create(
@@ -16,7 +16,7 @@ test('Deve criar um preço', function () {
     );
     $layerRepository = Mockery::mock(LayerRepository::class);
     $layerRepository->shouldReceive('findById')
-        //->with(LayerId::restore($layer->getId()))
+        // ->with(LayerId::restore($layer->getId()))
         ->once()
         ->andReturn($layer);
 
@@ -25,12 +25,12 @@ test('Deve criar um preço', function () {
     );
     $productRepository = Mockery::mock(ProductRepository::class);
     $productRepository->shouldReceive('findById')
-        //->with(ProductId::restore($product->getId()))
+        // ->with(ProductId::restore($product->getId()))
         ->once()
         ->andReturn($product);
     $priceRepository = Mockery::mock(PriceRepository::class);
     $priceRepository->shouldReceive('existsByLayerIdAndProductId')
-        //->with(LayerId::restore($layer->getId()), ProductId::restore($product->getId()))
+        // ->with(LayerId::restore($layer->getId()), ProductId::restore($product->getId()))
         ->once()
         ->andReturn(false);
     $priceRepository->shouldReceive('save')

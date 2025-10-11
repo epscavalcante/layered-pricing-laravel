@@ -1,14 +1,13 @@
 <?php
 
-use App\Repositories\ProductModelRepository;
 use App\Repositories\ProductQueryBuilderRepository;
-use Src\Domain\Entities\Product;
 use Src\Application\Repositories\ProductRepository;
+use Src\Domain\Entities\Product;
 use Src\Domain\ValueObjects\ProductId;
 
 beforeEach(function () {
     /** @var ProductRepository */
-    $this->repository = new ProductQueryBuilderRepository();
+    $this->repository = new ProductQueryBuilderRepository;
 });
 
 test('Deve salvar um produto', function () {

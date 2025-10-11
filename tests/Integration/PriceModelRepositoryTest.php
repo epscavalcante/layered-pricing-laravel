@@ -7,7 +7,7 @@ use Src\Domain\ValueObjects\ProductId;
 
 beforeEach(function () {
     /** @var ProductRepository */
-    $this->repository = new PriceModelRepository();
+    $this->repository = new PriceModelRepository;
 });
 
 test('Deve retornar null quando preço não for encontrado pela layerId e productId', function () {

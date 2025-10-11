@@ -2,9 +2,9 @@
 
 use App\Models\Layer;
 use App\Queries\LayerQueryBuilder;
-use Src\Domain\Enums\DiscountType;
 use Src\Application\Queries\ListQueryInput;
 use Src\Application\Queries\ListQueryOutput;
+use Src\Domain\Enums\DiscountType;
 
 it('Deve listar retornar uma lista e layers', function () {
     $baseLayersCount = rand(1, 5);

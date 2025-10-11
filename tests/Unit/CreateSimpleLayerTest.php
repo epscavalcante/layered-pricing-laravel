@@ -1,11 +1,11 @@
 <?php
 
+use Src\Application\Repositories\LayerRepository;
 use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayer;
 use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayerInput;
 use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayerOutput;
 use Src\Domain\Entities\Layer;
 use Src\Domain\Exceptions\LayerAlreadExistsException;
-use Src\Application\Repositories\LayerRepository;
 
 test('Deve criar uma layer base', function () {
     $input = new CreateSimpleLayerInput(
@@ -26,7 +26,6 @@ test('Deve criar uma layer base', function () {
     expect($output)->toBeInstanceOf(CreateSimpleLayerOutput::class);
     expect($output->layerId)->toBeString();
 });
-
 
 test('Deve falhar ao criar uma que ja existe uma layer', function () {
     $layer = Layer::create(

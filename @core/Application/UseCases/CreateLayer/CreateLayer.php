@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Src\Application\UseCases\CreateLayer;
 
 use Exception;
+use Src\Application\Repositories\LayerRepository;
 use Src\Application\UseCases\CreateLayer\CreateDiscountLayer\CreateDiscountLayer;
 use Src\Application\UseCases\CreateLayer\CreateDiscountLayer\CreateDiscountLayerInput;
 use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayer;
 use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayerInput;
 use Src\Domain\Enums\LayerType;
-use Src\Application\Repositories\LayerRepository;
 
 class CreateLayer
 {

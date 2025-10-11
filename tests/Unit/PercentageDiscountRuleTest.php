@@ -15,7 +15,6 @@ test('Deve criar uma Regra de desconto de Percentagem', function ($percentageVal
     [100],
 ]);
 
-
 test('Não deve criar uma Regra de desconto de Percentagem', function ($percentageValue) {
     $percentageDiscountRule = new PercentageDiscountRule(
         value: $percentageValue

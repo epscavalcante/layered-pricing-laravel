@@ -3,8 +3,8 @@
 namespace App\Repositories;
 
 use Illuminate\Support\Facades\DB;
-use Src\Domain\Entities\Product;
 use Src\Application\Repositories\ProductRepository;
+use Src\Domain\Entities\Product;
 use Src\Domain\ValueObjects\ProductId;
 
 class ProductQueryBuilderRepository implements ProductRepository

@@ -14,7 +14,6 @@ use Src\Application\Queries\ListPriceQuery\ListPriceQuery;
 use Src\Application\Repositories\LayerRepository;
 use Src\Application\Repositories\PriceRepository;
 use Src\Application\Repositories\ProductRepository;
-use Src\Application\UseCases\ListPrices\ListPrices;
 
 class AppServiceProvider extends ServiceProvider
 {

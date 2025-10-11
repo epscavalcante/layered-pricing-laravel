@@ -2,11 +2,11 @@
 
 namespace Src\Domain\Factories;
 
-use Src\Domain\ValueObjects\DiscountRule;
-use Src\Domain\ValueObjects\PercentageDiscountRule;
-use Src\Domain\ValueObjects\FixedDiscountRule;
-use Src\Domain\Enums\DiscountType;
 use InvalidArgumentException;
+use Src\Domain\Enums\DiscountType;
+use Src\Domain\ValueObjects\DiscountRule;
+use Src\Domain\ValueObjects\FixedDiscountRule;
+use Src\Domain\ValueObjects\PercentageDiscountRule;
 
 class DiscountRuleFactory
 {
@@ -14,7 +14,7 @@ class DiscountRuleFactory
     {
         $discountType = DiscountType::tryFrom($type);
 
-        if (!$discountType) {
+        if (! $discountType) {
             throw new InvalidArgumentException("Tipo de desconto inválido: {$type}");
         }
 

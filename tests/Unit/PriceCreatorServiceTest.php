@@ -1,19 +1,15 @@
 <?php
 
-use Src\Application\Services\PriceCreatorService;
-use Src\Application\UseCases\CreatePrice\CreatePrice;
-use Src\Application\UseCases\CreatePrice\CreatePriceInput;
-use Src\Application\UseCases\CreatePrice\CreatePriceOutput;
-use Src\Domain\Entities\Layer;
-use Src\Domain\Entities\Price;
-use Src\Domain\Entities\Product;
-use Src\Domain\Enums\LayerType;
-use Src\Domain\Exceptions\LayerNotFoundException;
-use Src\Domain\Exceptions\PriceAlreadExistsException;
-use Src\Domain\Exceptions\ProductNotFoundException;
 use Src\Application\Repositories\LayerRepository;
 use Src\Application\Repositories\PriceRepository;
 use Src\Application\Repositories\ProductRepository;
+use Src\Application\Services\PriceCreatorService;
+use Src\Domain\Entities\Layer;
+use Src\Domain\Entities\Price;
+use Src\Domain\Entities\Product;
+use Src\Domain\Exceptions\LayerNotFoundException;
+use Src\Domain\Exceptions\PriceAlreadExistsException;
+use Src\Domain\Exceptions\ProductNotFoundException;
 use Src\Domain\ValueObjects\LayerId;
 use Src\Domain\ValueObjects\ProductId;
 
@@ -46,12 +42,12 @@ test('Deve falhar criar um Price para um produto que não existe', function () {
         code: 'layer',
     );
     $layerRepository->shouldReceive('findById')
-        //->with(LayerId::restore($layer->getId()))
+        // ->with(LayerId::restore($layer->getId()))
         ->once()
         ->andReturn($layer);
     $productRepository = Mockery::mock(ProductRepository::class);
     $productRepository->shouldReceive('findById')
-        //->with(ProductId::create())
+        // ->with(ProductId::create())
         ->once()
         ->andReturnNull();
     $priceRepository = Mockery::mock(PriceRepository::class);
@@ -77,7 +73,7 @@ test('Deve falhar criar um Price que já existe', function () {
         code: 'layer',
     );
     $layerRepository->shouldReceive('findById')
-        //->with(LayerId::restore($layer->getId()))
+        // ->with(LayerId::restore($layer->getId()))
         ->once()
         ->andReturn($layer);
     $productRepository = Mockery::mock(ProductRepository::class);
@@ -85,12 +81,12 @@ test('Deve falhar criar um Price que já existe', function () {
         name: 'Produto'
     );
     $productRepository->shouldReceive('findById')
-        //->with(ProductId::restore($product->getId()))
+        // ->with(ProductId::restore($product->getId()))
         ->once()
         ->andReturn($product);
     $priceRepository = Mockery::mock(PriceRepository::class);
     $priceRepository->shouldReceive('existsByLayerIdAndProductId')
-        //->with(LayerId::restore($layer->getId()), ProductId::restore($product->getId()))
+        // ->with(LayerId::restore($layer->getId()), ProductId::restore($product->getId()))
         ->once()
         ->andReturn(true);
 
@@ -113,7 +109,7 @@ test('Deve criar um preço', function () {
     );
     $layerRepository = Mockery::mock(LayerRepository::class);
     $layerRepository->shouldReceive('findById')
-        //->with(LayerId::restore($layer->getId()))
+        // ->with(LayerId::restore($layer->getId()))
         ->once()
         ->andReturn($layer);
 
@@ -122,12 +118,12 @@ test('Deve criar um preço', function () {
     );
     $productRepository = Mockery::mock(ProductRepository::class);
     $productRepository->shouldReceive('findById')
-        //->with(ProductId::restore($product->getId()))
+        // ->with(ProductId::restore($product->getId()))
         ->once()
         ->andReturn($product);
     $priceRepository = Mockery::mock(PriceRepository::class);
     $priceRepository->shouldReceive('existsByLayerIdAndProductId')
-        //->with(LayerId::restore($layer->getId()), ProductId::restore($product->getId()))
+        // ->with(LayerId::restore($layer->getId()), ProductId::restore($product->getId()))
         ->once()
         ->andReturn(false);
     $priceRepository->shouldReceive('save')

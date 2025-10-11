@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateLayerRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Src\Application\UseCases\ListLayers\ListLayers;
-use Src\Application\UseCases\ListLayers\ListLayersInput;
 use Src\Application\UseCases\CreateLayer\CreateDiscountLayer\CreateDiscountLayer;
 use Src\Application\UseCases\CreateLayer\CreateLayer;
 use Src\Application\UseCases\CreateLayer\CreateLayerInput;
 use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayer;
 use Src\Application\UseCases\GetLayer\GetLayer;
 use Src\Application\UseCases\GetLayer\GetLayerInput;
+use Src\Application\UseCases\ListLayers\ListLayers;
+use Src\Application\UseCases\ListLayers\ListLayersInput;
 
 class LayerController extends Controller
 {
@@ -35,12 +35,13 @@ class LayerController extends Controller
         $output = $this->listLayersUseCase->execute(
             input: $input
         );
+
         return response()->json(
             status: 200,
             data: [
                 'total' => $output->total,
                 'items' => array_map(
-                    callback: fn($item) => [
+                    callback: fn ($item) => [
                         'code' => $item->code,
                         'type' => $item->type,
                         'layer_id' => $item->layerId,
@@ -48,7 +49,7 @@ class LayerController extends Controller
                         'discount_value' => $item->discountValue,
                     ],
                     array: $output->items
-                )
+                ),
             ]
         );
     }
@@ -61,6 +62,7 @@ class LayerController extends Controller
         $output = $this->getLayerUseCase->execute(
             input: $input
         );
+
         return response()->json(
             status: 200,
             data: [
@@ -86,6 +88,7 @@ class LayerController extends Controller
         $output = $this->createLayerUseCase->execute(
             input: $input,
         );
+
         return response()->json(
             status: 201,
             data: ['layer_id' => $output->layerId]

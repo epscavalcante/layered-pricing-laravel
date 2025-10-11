@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Src\Domain\Enums\DiscountType;
 use Src\Domain\Enums\LayerType;
 use Src\Domain\Factories\DiscountRuleFactory;
-use Src\Domain\ValueObjects\LayerId;
 use Src\Domain\ValueObjects\Ulid;
 
 /**
@@ -36,7 +35,7 @@ class LayerFactory extends Factory
      */
     public function normal(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'type' => LayerType::NORMAL->value,
         ]);
     }
@@ -51,7 +50,7 @@ class LayerFactory extends Factory
             value: $value
         );
 
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'type' => LayerType::DISCOUNT->value,
             'discount_type' => $discountRule->getType()->value,
             'discount_value' => $discountRule->getValue(),

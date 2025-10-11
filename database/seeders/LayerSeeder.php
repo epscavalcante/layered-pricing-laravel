@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Layer;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Src\Domain\Enums\DiscountType;
 

@@ -14,7 +14,6 @@ it('returns a unprocessable response', function () {
     ]);
 });
 
-
 it('returns a successful response', function () {
     $response = $this->postJson(
         route('products.store_simple'),
@@ -25,7 +24,6 @@ it('returns a successful response', function () {
 
     $response->assertCreated();
     $response->assertJson(
-        fn(AssertableJson $json) =>
-        $json->whereType('product_id', 'string')
+        fn (AssertableJson $json) => $json->whereType('product_id', 'string')
     );
 });

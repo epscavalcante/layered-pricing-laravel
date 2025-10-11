@@ -14,17 +14,11 @@ interface PriceRepository
     public function existsByLayerIdAndProductId(LayerId $layerId, ProductId $productId): bool;
 
     /**
-     * @param LayerId $layerId
-     * @param ProductId[] $productIds
+     * @param  ProductId[]  $productIds
      * @return Price[]
      */
     public function findByLayerIdAndProductIds(LayerId $layerId, array $productIds): array;
 
-    /**
-     * @param LayerId $layerId
-     * @param ProductId $productId
-     * @return ?Price
-     */
     public function findByLayerIdAndProductId(LayerId $layerId, ProductId $productId): ?Price;
 
     public function findById(PriceId $priceId): ?Price;

@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Src\Application\UseCases\CreateDiscountPrice;
 
 use Exception;
-use Src\Application\Services\PriceCreatorService;
-use Src\Domain\Enums\LayerType;
-use Src\Domain\Exceptions\LayerHaventDiscountTypeException;
-use Src\Domain\Exceptions\LayerNotFoundException;
-use Src\Domain\Exceptions\PriceNotFoundException;
 use Src\Application\Repositories\LayerRepository;
 use Src\Application\Repositories\PriceRepository;
+use Src\Application\Services\PriceCreatorService;
+use Src\Domain\Enums\LayerType;
+use Src\Domain\Exceptions\LayerNotFoundException;
+use Src\Domain\Exceptions\PriceNotFoundException;
 use Src\Domain\ValueObjects\LayerId;
 use Src\Domain\ValueObjects\ProductId;
 
@@ -31,7 +30,7 @@ class CreateDiscountPrice
             type: LayerType::DISCOUNT
         );
         if (is_null($discountLayer)) {
-            throw new LayerNotFoundException();
+            throw new LayerNotFoundException;
         }
 
         if (is_null($discountLayer->getParentId())) {
@@ -45,7 +44,7 @@ class CreateDiscountPrice
         );
 
         if (is_null($basePrice)) {
-            throw new PriceNotFoundException();
+            throw new PriceNotFoundException;
         }
 
         $price = $this->priceCreator->handle(

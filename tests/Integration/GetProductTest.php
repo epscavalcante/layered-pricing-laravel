@@ -10,7 +10,7 @@ use Src\Domain\ValueObjects\ProductId;
 
 beforeEach(function () {
     /** @var ProductRepository */
-    $this->productRepository = new ProductModelRepository();
+    $this->productRepository = new ProductModelRepository;
 });
 
 test('Deve lançar ProductNotFoundException', function () {

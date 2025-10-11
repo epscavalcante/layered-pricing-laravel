@@ -3,9 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Layer as LayerModel;
+use Src\Application\Repositories\LayerRepository;
 use Src\Domain\Entities\Layer;
 use Src\Domain\Enums\LayerType;
-use Src\Application\Repositories\LayerRepository;
 use Src\Domain\ValueObjects\LayerId;
 
 class LayerModelRepository implements LayerRepository

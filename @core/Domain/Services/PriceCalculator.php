@@ -25,8 +25,8 @@ class PriceCalculator
     {
         return match ($discountType) {
             DiscountType::PERCENTAGE->value => self::calculatePercentageDiscount($baseValue, $discountValue),
-            DiscountType::FIXED->value      => self::calculateFixedDiscount($baseValue, $discountValue),
-            default      => throw new \DomainException('Tipo de desconto inválido')
+            DiscountType::FIXED->value => self::calculateFixedDiscount($baseValue, $discountValue),
+            default => throw new \DomainException('Tipo de desconto inválido')
         };
     }
 

@@ -3,6 +3,8 @@
 use App\Repositories\LayerModelRepository;
 use App\Repositories\PriceModelRepository;
 use App\Repositories\ProductModelRepository;
+use Src\Application\Repositories\LayerRepository;
+use Src\Application\Repositories\PriceRepository;
 use Src\Application\UseCases\GetPrice\GetPrice;
 use Src\Application\UseCases\GetPrice\GetPriceInput;
 use Src\Application\UseCases\GetPrice\GetPriceOutput;
@@ -10,17 +12,15 @@ use Src\Domain\Entities\Layer;
 use Src\Domain\Entities\Price;
 use Src\Domain\Entities\Product;
 use Src\Domain\Exceptions\PriceNotFoundException;
-use Src\Application\Repositories\LayerRepository;
-use Src\Application\Repositories\PriceRepository;
 use Src\Domain\ValueObjects\PriceId;
 
 beforeEach(function () {
     /** @var ProductRepository */
-    $this->productRepository = new ProductModelRepository();
+    $this->productRepository = new ProductModelRepository;
     /** @var LayerRepository */
-    $this->layerRepository = new LayerModelRepository();
+    $this->layerRepository = new LayerModelRepository;
     /** @var PriceRepository */
-    $this->priceRepository = new PriceModelRepository();
+    $this->priceRepository = new PriceModelRepository;
 });
 
 test('Deve lançar ProductNotFoundException', function () {

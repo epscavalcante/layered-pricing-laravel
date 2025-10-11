@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Src\Application\UseCases\CreateSimpleProduct;
 
-use Src\Domain\Entities\Product;
 use Src\Application\Repositories\ProductRepository;
+use Src\Domain\Entities\Product;
 
 class CreateSimpleProduct
 {

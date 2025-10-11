@@ -30,19 +30,23 @@ class PriceController extends Controller
         $output = $useCase->execute(
             input: $input
         );
+
         return response()->json(
             status: 200,
             data: [
                 'total' => $output->total,
                 'items' => array_map(
-                    callback: fn($item) => [
+                    callback: fn ($item) => [
                         'price_id' => $item->priceId,
                         'layer_id' => $item->layerId,
                         'product_id' => $item->productId,
+                        'product_name' => $item->productName,
+                        'layer_code' => $item->layerCode,
+                        'layer_type' => $item->layerType,
                         'value' => $item->value,
                     ],
                     array: $output->items
-                )
+                ),
             ]
         );
     }
@@ -55,6 +59,7 @@ class PriceController extends Controller
         $output = $useCase->execute(
             input: $input
         );
+
         return response()->json(
             status: 200,
             data: [
@@ -76,6 +81,7 @@ class PriceController extends Controller
         $output = $useCase->execute(
             input: $input,
         );
+
         return response()->json(
             status: 201,
             data: ['price_id' => $output->priceId]
@@ -91,6 +97,7 @@ class PriceController extends Controller
         $output = $useCase->execute(
             input: $input,
         );
+
         return response()->json(
             status: 201,
             data: ['price_id' => $output->priceId]

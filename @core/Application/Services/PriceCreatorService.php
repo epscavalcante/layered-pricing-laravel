@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Src\Application\Services;
 
+use Src\Application\Repositories\LayerRepository;
+use Src\Application\Repositories\PriceRepository;
+use Src\Application\Repositories\ProductRepository;
 use Src\Domain\Entities\Price;
 use Src\Domain\Exceptions\LayerNotFoundException;
 use Src\Domain\Exceptions\PriceAlreadExistsException;
 use Src\Domain\Exceptions\ProductNotFoundException;
-use Src\Application\Repositories\LayerRepository;
-use Src\Application\Repositories\ProductRepository;
-use Src\Application\Repositories\PriceRepository;
 use Src\Domain\Services\PriceCalculator;
 use Src\Domain\ValueObjects\LayerId;
 use Src\Domain\ValueObjects\ProductId;
@@ -27,12 +27,12 @@ class PriceCreatorService
     {
         $layer = $this->layerRepository->findById($layerId);
         if (is_null($layer)) {
-            throw new LayerNotFoundException();
+            throw new LayerNotFoundException;
         }
 
         $product = $this->productRepository->findById($productId);
         if (is_null($product)) {
-            throw new ProductNotFoundException();
+            throw new ProductNotFoundException;
         }
 
         $priceExists = $this->priceRepository->existsByLayerIdAndProductId(

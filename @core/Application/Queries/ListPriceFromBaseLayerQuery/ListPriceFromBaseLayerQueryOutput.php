@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Src\Application\Queries\ListPriceQuery;
+namespace Src\Application\Queries\ListPriceFromBaseLayerQuery;
 
-readonly class ListPriceQueryOutput
+readonly class ListPriceFromBaseLayerQueryOutput
 {
     /**
      * @param  ListQueryItemOutput[]  $items
@@ -15,15 +15,15 @@ readonly class ListPriceQueryOutput
     ) {}
 }
 
-class ListPriceQueryItemOutput
+class ListPriceFromBaseLayerQueryItemOutput
 {
     public function __construct(
         public string $priceId,
-        public string $layerId,
         public string $productId,
         public string $productName,
-        public string $layerCode,
-        public string $layerType,
-        public int $value,
+        // discountValue
+        public int $basePrice,
+        public int $parentPrice, // pode ser reajuste
+        public int $finalPrice,
     ) {}
 }

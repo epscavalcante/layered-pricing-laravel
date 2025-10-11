@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Src\Domain\Entities;
 
-use Exception;
-use Src\Domain\Enums\LayerType as Type;
 use Src\Domain\Enums\LayerType;
+use Src\Domain\Enums\LayerType as Type;
 use Src\Domain\Factories\DiscountRuleFactory;
 use Src\Domain\ValueObjects\DiscountRule;
 use Src\Domain\ValueObjects\LayerId;
-
 
 class Layer
 {
@@ -29,6 +27,7 @@ class Layer
         $discountRule = $parentId && $discountType && $discountValue
             ? DiscountRuleFactory::create($discountType, $discountValue)
             : null;
+
         return new self(
             id: LayerId::create(),
             parentId: $parentId,
@@ -41,6 +40,7 @@ class Layer
     public static function createDiscountLayer(string $baseLayerId, string $code, string $discountType, int $discountValue)
     {
         $discountRule = DiscountRuleFactory::create($discountType, $discountValue);
+
         return new self(
             id: LayerId::create(),
             parentId: LayerId::restore($baseLayerId),
@@ -54,6 +54,7 @@ class Layer
     {
         $parentId = $parentId ? LayerId::restore($parentId) : null;
         $discountRule = $discountType && $discountValue ? DiscountRuleFactory::create($discountType, $discountValue) : null;
+
         return new self(
             id: LayerId::restore($id),
             type: Type::tryFrom($type),
@@ -68,7 +69,7 @@ class Layer
         return $this->id->getValue();
     }
 
-    public function getParentId():?string
+    public function getParentId(): ?string
     {
         return $this->parentId?->getValue();
     }

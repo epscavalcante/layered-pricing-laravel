@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Layer;
 use App\Models\Price;
 use App\Models\Product;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PriceSeeder extends Seeder
@@ -26,4 +25,4 @@ class PriceSeeder extends Seeder
                 $price->save();
             });
     }
-};
+}

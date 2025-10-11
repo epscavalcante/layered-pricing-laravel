@@ -1,12 +1,12 @@
 <?php
 
+use Src\Application\Repositories\LayerRepository;
+use Src\Application\Repositories\PriceRepository;
+use Src\Application\Repositories\ProductRepository;
 use Src\Application\Services\PriceCreatorService;
 use Src\Application\UseCases\CreateDiscountPrice\CreateDiscountPrice;
 use Src\Application\UseCases\CreateDiscountPrice\CreateDiscountPriceInput;
 use Src\Application\UseCases\CreateDiscountPrice\CreateDiscountPriceOutput;
-use Src\Application\UseCases\CreatePrice\CreatePrice;
-use Src\Application\UseCases\CreatePrice\CreatePriceInput;
-use Src\Application\UseCases\CreatePrice\CreatePriceOutput;
 use Src\Domain\Entities\Layer;
 use Src\Domain\Entities\Price;
 use Src\Domain\Entities\Product;
@@ -14,10 +14,6 @@ use Src\Domain\Enums\DiscountType;
 use Src\Domain\Enums\LayerType;
 use Src\Domain\Exceptions\LayerNotFoundException;
 use Src\Domain\Exceptions\PriceNotFoundException;
-use Src\Application\Repositories\LayerRepository;
-use Src\Application\Repositories\PriceRepository;
-use Src\Application\Repositories\ProductRepository;
-use Src\Domain\ValueObjects\ProductId;
 
 test('Deve criar um preço com desconto', function () {
     $baseLayer = Layer::create(
@@ -29,7 +25,6 @@ test('Deve criar um preço com desconto', function () {
         discountType: DiscountType::FIXED->value,
         discountValue: 15
     );
-
 
     $layerRepository = Mockery::mock(LayerRepository::class);
     // pro usecase
@@ -61,7 +56,7 @@ test('Deve criar um preço com desconto', function () {
     $priceRepository->shouldReceive('findByLayerIdAndProductId')
         ->once()
         ->andReturn($price);
-    //pro priceCreator
+    // pro priceCreator
     $priceRepository->shouldReceive('existsByLayerIdAndProductId')
         ->once()
         ->andReturnFalse();
@@ -126,7 +121,7 @@ test('Deve falhar ao usar uma layer base para criar um preço com desconto', fun
     $priceRepository = Mockery::mock(PriceRepository::class);
     // pro usecase
     $priceRepository->shouldNotReceive('findByLayerIdAndProductId');
-    //pro priceCreator
+    // pro priceCreator
     $priceRepository->shouldNotReceive('existsByLayerIdAndProductId');
     $priceRepository->shouldNotReceive('save');
 
@@ -191,7 +186,7 @@ test('Deve falhar retornar uma layer de desconto sem uma layer base', function (
     $priceRepository = Mockery::mock(PriceRepository::class);
     // pro usecase
     $priceRepository->shouldNotReceive('findByLayerIdAndProductId');
-    //pro priceCreator
+    // pro priceCreator
     $priceRepository->shouldNotReceive('existsByLayerIdAndProductId');
     $priceRepository->shouldNotReceive('save');
 
@@ -216,7 +211,6 @@ test('Deve falhar retornar uma layer de desconto sem uma layer base', function (
         input: $input
     );
 })->throws(Exception::class, 'Layer de desconto sem parent Layer');
-
 
 test('Deve falhar ao não encontrar o preço da layer base da layer de desconto', function () {
     $baseLayer = Layer::create(
@@ -256,7 +250,7 @@ test('Deve falhar ao não encontrar o preço da layer base da layer de desconto'
     $priceRepository->shouldReceive('findByLayerIdAndProductId')
         ->once()
         ->andReturnNull();
-    //pro priceCreator
+    // pro priceCreator
     $priceRepository->shouldNotReceive('existsByLayerIdAndProductId');
     $priceRepository->shouldNotReceive('save');
 

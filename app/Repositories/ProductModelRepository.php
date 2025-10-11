@@ -3,8 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Product as ProductModel;
-use Src\Domain\Entities\Product;
 use Src\Application\Repositories\ProductRepository;
+use Src\Domain\Entities\Product;
 use Src\Domain\ValueObjects\ProductId;
 
 class ProductModelRepository implements ProductRepository

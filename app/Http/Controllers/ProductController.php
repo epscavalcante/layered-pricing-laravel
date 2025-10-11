@@ -19,6 +19,7 @@ class ProductController extends Controller
         $output = $useCase->execute(
             input: $input
         );
+
         return response()->json(
             status: 200,
             data: [
@@ -36,6 +37,7 @@ class ProductController extends Controller
         $output = $useCase->execute(
             input: $input,
         );
+
         return response()->json(
             status: 201,
             data: [

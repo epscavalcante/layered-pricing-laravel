@@ -17,7 +17,6 @@ test('Deve criar uma Regra de desconto de Valor fixo', function ($percentageValu
     [15000],
 ]);
 
-
 test('Não deve criar uma Regra de desconto de valor fixo', function ($percentageValue) {
     $rule = new FixedDiscountRule(
         value: $percentageValue

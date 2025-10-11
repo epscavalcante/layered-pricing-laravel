@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Src\Application\UseCases\GetPrice;
 
-use Src\Domain\Exceptions\PriceNotFoundException;
 use Src\Application\Repositories\PriceRepository;
+use Src\Domain\Exceptions\PriceNotFoundException;
 use Src\Domain\ValueObjects\PriceId;
 
 class GetPrice
@@ -18,8 +18,9 @@ class GetPrice
     {
         $price = $this->priceRepository->findById(PriceId::restore($input->priceId));
         if (is_null($price)) {
-            throw new PriceNotFoundException();
+            throw new PriceNotFoundException;
         }
+
         return new GetPriceOutput(
             priceId: $price->getId(),
             layerId: $price->getLayerId(),

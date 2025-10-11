@@ -10,7 +10,6 @@ test('Deve criar um produto', function () {
     expect($product->getName())->ToBe('Product');
 });
 
-
 test('Deve restaurar um produto', function () {
     $productId = ProductId::create();
 
@@ -19,4 +18,3 @@ test('Deve restaurar um produto', function () {
     expect($product->getId())->ToBe($productId->getValue());
     expect($product->getName())->ToBe('Product');
 });
-

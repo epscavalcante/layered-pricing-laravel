@@ -39,7 +39,7 @@ class CreateLayerRequest extends FormRequest
                         'string',
                     ],
                     defaultRules: ['nullable']
-                )
+                ),
             ],
             'discount_type' => [
                 Rule::when(
@@ -47,10 +47,10 @@ class CreateLayerRequest extends FormRequest
                     rules: [
                         'required',
                         'string',
-                        Rule::in(DiscountType::cases())
+                        Rule::in(DiscountType::cases()),
                     ],
                     defaultRules: ['nullable']
-                )
+                ),
             ],
             'discount_value' => [
                 Rule::when(
@@ -64,8 +64,8 @@ class CreateLayerRequest extends FormRequest
                         );
                     },
                     defaultRules: ['nullable']
-                )
-            ]
+                ),
+            ],
         ];
     }
 }

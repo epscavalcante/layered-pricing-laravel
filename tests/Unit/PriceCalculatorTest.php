@@ -7,10 +7,10 @@ use Src\Domain\Services\PriceCalculator;
 use Src\Domain\ValueObjects\LayerId;
 
 test('Deve cacular o preço de uma layer simples', function (int $baseValue, string $layerType, int $expectedFinalValue, ?string $discountType = null, ?int $discountValue = null) {
-    
-    $parentId = $discountType && $discountValue 
-        ? LayerId::create() :  null;
-    
+
+    $parentId = $discountType && $discountValue
+        ? LayerId::create() : null;
+
     $layer = Layer::create(
         code: uniqid('LAYER_'),
         type: $layerType,

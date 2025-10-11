@@ -1,5 +1,6 @@
 <?php
 
+use Src\Application\Repositories\LayerRepository;
 use Src\Application\UseCases\CreateLayer\CreateDiscountLayer\CreateDiscountLayer;
 use Src\Application\UseCases\CreateLayer\CreateDiscountLayer\CreateDiscountLayerInput;
 use Src\Application\UseCases\CreateLayer\CreateDiscountLayer\CreateDiscountLayerOutput;
@@ -7,7 +8,6 @@ use Src\Domain\Entities\Layer;
 use Src\Domain\Enums\DiscountType;
 use Src\Domain\Exceptions\LayerAlreadExistsException;
 use Src\Domain\Exceptions\LayerNotFoundException;
-use Src\Application\Repositories\LayerRepository;
 use Src\Domain\ValueObjects\LayerId;
 
 test('Deve criar uma layer de desconto', function () {
@@ -40,7 +40,6 @@ test('Deve criar uma layer de desconto', function () {
     expect($output->layerId)->toBeString();
 });
 
-
 test('Deve falhar ao criar uma layer com code existente', function () {
     $layer = Layer::create('layer');
 
@@ -60,7 +59,6 @@ test('Deve falhar ao criar uma layer com code existente', function () {
     );
     $useCase->execute($input);
 })->throws(LayerAlreadExistsException::class);
-
 
 test('Deve falhar ao tentar layer de desconto com uma base layer que não existe', function () {
     $layerRepository = Mockery::mock(LayerRepository::class);

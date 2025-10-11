@@ -1,10 +1,10 @@
 <?php
 
+use Src\Application\Repositories\ProductRepository;
 use Src\Application\UseCases\CreateSimpleProduct\CreateSimpleProduct;
 use Src\Application\UseCases\CreateSimpleProduct\CreateSimpleProductInput;
 use Src\Application\UseCases\CreateSimpleProduct\CreateSimpleProductOutput;
 use Src\Domain\Entities\Product;
-use Src\Application\Repositories\ProductRepository;
 
 test('Deve criar um produto', function () {
     $input = new CreateSimpleProductInput(

@@ -8,7 +8,7 @@ use Src\Domain\ValueObjects\LayerId;
 
 beforeEach(function () {
     /** @var ProductRepository */
-    $this->repository = new LayerModelRepository();
+    $this->repository = new LayerModelRepository;
 });
 
 test('Deve salvar uma layer normal', function () {
@@ -49,7 +49,6 @@ test('Deve salvar uma layer de desconto percentual', function () {
     expect($percentageDiscountLayerExists->getDiscountValue())->toBe(17);
     expect($percentageDiscountLayerExists->isDiscount())->toBeTruthy();
 });
-
 
 test('Deve salvar uma layer de desconto fixo', function () {
     $base = Layer::create(

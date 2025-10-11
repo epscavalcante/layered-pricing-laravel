@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Src\Application\UseCases\CreateLayer\CreateSimpleLayer;
 
+use Src\Application\Repositories\LayerRepository;
 use Src\Domain\Entities\Layer;
 use Src\Domain\Exceptions\LayerAlreadExistsException;
-use Src\Application\Repositories\LayerRepository;
 
 class CreateSimpleLayer
 {

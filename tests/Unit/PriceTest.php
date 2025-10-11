@@ -8,7 +8,7 @@ use Src\Domain\ValueObjects\ProductId;
 test('Deve criar um price', function () {
     $layerId = LayerId::create();
     $productId = ProductId::create();
-    
+
     $price = Price::create($layerId->getValue(), $productId->getValue(), 1000);
     expect($price)->toBeInstanceOf(price::class);
     expect($price->getId())->ToBeString();
@@ -28,4 +28,3 @@ test('Deve restaurar um price', function () {
     expect($price->getProductId())->ToBe($productId->getValue());
     expect($price->getValue())->ToBe(0);
 });
-

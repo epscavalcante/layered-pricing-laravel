@@ -24,7 +24,7 @@ class CreateBasePriceRequest extends FormRequest
         return [
             'product_id' => 'required|string',
             'layer_id' => 'required|string',
-            'value' => 'required|integer|gt:0'
+            'value' => 'required|integer|gt:0',
         ];
     }
 }

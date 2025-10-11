@@ -1,6 +1,7 @@
 <?php
 
 use App\Repositories\LayerModelRepository;
+use Src\Application\Repositories\LayerRepository;
 use Src\Application\UseCases\GetLayer\GetLayer;
 use Src\Application\UseCases\GetLayer\GetLayerInput;
 use Src\Application\UseCases\GetLayer\GetLayerOutput;
@@ -8,12 +9,11 @@ use Src\Domain\Entities\Layer;
 use Src\Domain\Enums\DiscountType;
 use Src\Domain\Enums\LayerType;
 use Src\Domain\Exceptions\LayerNotFoundException;
-use Src\Application\Repositories\LayerRepository;
 use Src\Domain\ValueObjects\LayerId;
 
 beforeEach(function () {
     /** @var LayerRepository */
-    $this->layerRepository = new LayerModelRepository();
+    $this->layerRepository = new LayerModelRepository;
 });
 
 test('Deve lançar LayerNotFoundException', function () {

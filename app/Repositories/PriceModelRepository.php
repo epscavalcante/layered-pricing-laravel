@@ -3,8 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Price as PriceModel;
-use Src\Domain\Entities\Price;
 use Src\Application\Repositories\PriceRepository;
+use Src\Domain\Entities\Price;
 use Src\Domain\ValueObjects\LayerId;
 use Src\Domain\ValueObjects\PriceId;
 use Src\Domain\ValueObjects\ProductId;
@@ -20,8 +20,7 @@ class PriceModelRepository implements PriceRepository
     }
 
     /**
-     * @param LayerId $layerId
-     * @param ProductId[] $productIds
+     * @param  ProductId[]  $productIds
      * @return Price[]
      */
     public function findByLayerIdAndProductIds(LayerId $layerId, array $productIds): array
@@ -31,7 +30,7 @@ class PriceModelRepository implements PriceRepository
             ->whereIn(
                 'product_id',
                 array_map(
-                    callback: fn(ProductId $productId) => $productId->getValue(),
+                    callback: fn (ProductId $productId) => $productId->getValue(),
                     array: $productIds
                 )
             )
@@ -42,16 +41,11 @@ class PriceModelRepository implements PriceRepository
         }
 
         return array_map(
-            callback: fn(PriceModel $priceModel) => $this->toEntity($priceModel),
+            callback: fn (PriceModel $priceModel) => $this->toEntity($priceModel),
             array: $priceModels->all()
         );
     }
 
-    /**
-     * @param LayerId $layerId
-     * @param ProductId $productId
-     * @return ?Price
-     */
     public function findByLayerIdAndProductId(LayerId $layerId, ProductId $productId): ?Price
     {
         $priceModel = PriceModel::query()

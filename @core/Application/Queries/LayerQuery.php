@@ -21,10 +21,8 @@ class ListQueryInput
 
 class ListQueryOutput
 {
-
     /**
-     * @param int $total
-     * @param ListQueryItemOutput[] $items
+     * @param  ListQueryItemOutput[]  $items
      */
     public function __construct(
         public int $total,

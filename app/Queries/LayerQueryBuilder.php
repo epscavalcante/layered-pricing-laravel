@@ -33,7 +33,7 @@ class LayerQueryBuilder implements LayerQuery
 
         $items = $hasPagination
             ? array_map(
-                callback: fn(object $item) => new ListQueryItemOutput(
+                callback: fn (object $item) => new ListQueryItemOutput(
                     layerId: $item->parent_id,
                     code: $item->code,
                     type: $item->type,
@@ -43,7 +43,7 @@ class LayerQueryBuilder implements LayerQuery
                 array: $result->items()
             )
             : array_map(
-                callback: fn(object $item) => new ListQueryItemOutput(
+                callback: fn (object $item) => new ListQueryItemOutput(
                     layerId: $item->parent_id,
                     code: $item->code,
                     type: $item->type,

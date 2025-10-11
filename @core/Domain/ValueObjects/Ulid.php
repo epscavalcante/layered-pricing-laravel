@@ -14,15 +14,15 @@ class Ulid implements Stringable
 
     private function __construct(string $value)
     {
-        if (!$this->validate($value)) {
+        if (! $this->validate($value)) {
             throw new Exception('Invalid value');
         }
         $this->value = $value;
     }
 
-    public static function create():static
+    public static function create(): static
     {
-        $id = (new UlidFactory())->create();
+        $id = (new UlidFactory)->create();
 
         return new static((string) $id);
     }
@@ -46,6 +46,7 @@ class Ulid implements Stringable
     {
         try {
             (new UlidFactory)->createFromString($value);
+
             return true;
         } catch (\Throwable $th) {
             return false;

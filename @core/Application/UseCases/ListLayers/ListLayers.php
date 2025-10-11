@@ -22,6 +22,7 @@ class ListLayers
             perPage: $input->perPage
         );
         $layerQueryOutput = $this->layerQuery->list($layerQueryInput);
+
         return new ListLayersOutput(
             total: $layerQueryOutput->total,
             items: $layerQueryOutput->items,

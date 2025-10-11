@@ -11,7 +11,7 @@ test('Não deve criar uma layer de desconto com o tipo inválido', function () {
         type: 'fake',
         value: 55
     );
-})->throws(InvalidArgumentException::class, "Tipo de desconto inválido: fake");
+})->throws(InvalidArgumentException::class, 'Tipo de desconto inválido: fake');
 
 test('Deve criar uma discount rule de porcentagem', function () {
 

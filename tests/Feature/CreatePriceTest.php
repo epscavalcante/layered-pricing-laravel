@@ -21,8 +21,7 @@ it('returns a successful response when create simple price', function () {
 
     $response->assertCreated();
     $response->assertJson(
-        fn(AssertableJson $json) =>
-        $json->whereType('price_id', 'string')
+        fn (AssertableJson $json) => $json->whereType('price_id', 'string')
     );
 });
 
@@ -51,8 +50,7 @@ it('returns a successful response when create percentage discount price', functi
 
     $response->assertCreated();
     $response->assertJson(
-        fn(AssertableJson $json) =>
-        $json->whereType('price_id', 'string')
+        fn (AssertableJson $json) => $json->whereType('price_id', 'string')
     );
 });
 

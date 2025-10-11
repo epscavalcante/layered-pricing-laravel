@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Src\Application\UseCases\GetProduct;
 
-use Src\Domain\Exceptions\ProductNotFoundException;
 use Src\Application\Repositories\ProductRepository;
+use Src\Domain\Exceptions\ProductNotFoundException;
 use Src\Domain\ValueObjects\ProductId;
 
 class GetProduct
@@ -18,8 +18,9 @@ class GetProduct
     {
         $product = $this->productRepository->findById(ProductId::restore($input->productId));
         if (is_null($product)) {
-            throw new ProductNotFoundException();
+            throw new ProductNotFoundException;
         }
+
         return new GetProductOutput(
             productId: $product->getId(),
             name: $product->getName(),

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Src\Application\UseCases\GetLayer;
 
-use Src\Domain\Exceptions\LayerNotFoundException;
 use Src\Application\Repositories\LayerRepository;
+use Src\Domain\Exceptions\LayerNotFoundException;
 use Src\Domain\ValueObjects\LayerId;
 
 class GetLayer
@@ -18,8 +18,9 @@ class GetLayer
     {
         $layer = $this->layerRepository->findById(LayerId::restore($input->layerId));
         if (is_null($layer)) {
-            throw new LayerNotFoundException();
+            throw new LayerNotFoundException;
         }
+
         return new GetLayerOutput(
             layerId: $layer->getId(),
             code: $layer->getCode(),

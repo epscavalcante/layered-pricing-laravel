@@ -17,7 +17,6 @@ test('Deve criar restaurar um ulid', function () {
     expect(Ulid::restore($ulidString))->toBeInstanceOf(Ulid::class);
 });
 
-
 test('Não deve criar um Ulid', function () {
     Ulid::restore('fake');
 })->throws(Exception::class, 'Invalid value');

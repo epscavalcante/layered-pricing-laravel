@@ -22,6 +22,7 @@ class Price
         $id = PriceId::create();
         $layerId = LayerId::restore($layerId);
         $productId = ProductId::restore($productId);
+
         return new self(
             id: $id,
             layerId: $layerId,

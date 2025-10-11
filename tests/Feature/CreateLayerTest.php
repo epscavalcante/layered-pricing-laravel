@@ -34,7 +34,7 @@ describe(
                     'code' => 'discount',
                     'type' => LayerType::DISCOUNT->value,
                     'layer_id' => 'layer_id',
-                    'discount_type' => 'invalid'
+                    'discount_type' => 'invalid',
                 ]
             );
             $response->assertUnprocessable();
@@ -52,7 +52,7 @@ describe(
                     'type' => LayerType::DISCOUNT->value,
                     'layer_id' => 'layer_id',
                     'discount_type' => DiscountType::FIXED->value,
-                    'discount_value' => $discountValue
+                    'discount_value' => $discountValue,
                 ]
             );
             $response->assertUnprocessable();
@@ -69,7 +69,7 @@ describe(
                     'layer_id' => 'layer_id',
                     'type' => LayerType::DISCOUNT->value,
                     'discount_type' => DiscountType::PERCENTAGE->value,
-                    'discount_value' => $discountValue
+                    'discount_value' => $discountValue,
                 ]
             );
             $response->assertUnprocessable();
@@ -88,11 +88,11 @@ describe(
                 route('layers.store'),
                 [
                     'type' => LayerType::NORMAL->value,
-                    'code' => 'layer'
+                    'code' => 'layer',
                 ]
             );
             $response->assertCreated();
-            $response->assertJson(fn(AssertableJson $json) => $json->whereType('layer_id', 'string'));
+            $response->assertJson(fn (AssertableJson $json) => $json->whereType('layer_id', 'string'));
         });
 
         it('creates a fixed discount layer', function () {
@@ -108,7 +108,7 @@ describe(
                 ]
             );
             $response->assertCreated();
-            $response->assertJson(fn(AssertableJson $json) => $json->whereType('layer_id', 'string'));
+            $response->assertJson(fn (AssertableJson $json) => $json->whereType('layer_id', 'string'));
         });
 
         it('creates a percentage discount layer', function () {
@@ -124,7 +124,7 @@ describe(
                 ]
             );
             $response->assertCreated();
-            $response->assertJson(fn(AssertableJson $json) => $json->whereType('layer_id', 'string'));
+            $response->assertJson(fn (AssertableJson $json) => $json->whereType('layer_id', 'string'));
         });
     }
 );
