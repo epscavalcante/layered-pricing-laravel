@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Src\Application\Queries\ListPriceFromBaseLayerQuery;
 
-interface ListPriceQuery
+interface ListPriceFromBaseLayerQuery
 {
     public function query(ListPriceFromBaseLayerQueryInput $input): ListPriceFromBaseLayerQueryOutput;
 }

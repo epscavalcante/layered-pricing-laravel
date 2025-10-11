@@ -7,7 +7,7 @@ namespace Src\Application\Queries\ListPriceFromBaseLayerQuery;
 readonly class ListPriceFromBaseLayerQueryOutput
 {
     /**
-     * @param  ListQueryItemOutput[]  $items
+     * @param  ListPriceFromBaseLayerQueryItemOutput[]  $items
      */
     public function __construct(
         public int $total,

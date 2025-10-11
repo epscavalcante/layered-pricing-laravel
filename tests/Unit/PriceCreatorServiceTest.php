@@ -8,7 +8,7 @@ use Src\Domain\Entities\Layer;
 use Src\Domain\Entities\Price;
 use Src\Domain\Entities\Product;
 use Src\Domain\Exceptions\LayerNotFoundException;
-use Src\Domain\Exceptions\PriceAlreadExistsException;
+use Src\Domain\Exceptions\PriceAlreadyExistsException;
 use Src\Domain\Exceptions\ProductNotFoundException;
 use Src\Domain\ValueObjects\LayerId;
 use Src\Domain\ValueObjects\ProductId;
@@ -101,7 +101,7 @@ test('Deve falhar criar um Price que já existe', function () {
         productId: ProductId::restore($product->getId()),
         value: 0
     );
-})->throws(PriceAlreadExistsException::class);
+})->throws(PriceAlreadyExistsException::class);
 
 test('Deve criar um preço', function () {
     $layer = Layer::create(

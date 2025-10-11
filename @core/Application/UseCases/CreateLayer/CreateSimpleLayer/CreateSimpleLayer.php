@@ -6,7 +6,7 @@ namespace Src\Application\UseCases\CreateLayer\CreateSimpleLayer;
 
 use Src\Application\Repositories\LayerRepository;
 use Src\Domain\Entities\Layer;
-use Src\Domain\Exceptions\LayerAlreadExistsException;
+use Src\Domain\Exceptions\LayerAlreadyExistsException;
 
 class CreateSimpleLayer
 {
@@ -18,7 +18,7 @@ class CreateSimpleLayer
     {
         $layerFound = $this->layerRepository->findByCode($input->code);
         if ($layerFound) {
-            throw new LayerAlreadExistsException;
+            throw new LayerAlreadyExistsException;
         }
 
         $layer = Layer::create(

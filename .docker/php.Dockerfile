@@ -42,4 +42,8 @@ WORKDIR /var/www
 # Copy custom configurations PHP
 COPY ./php.ini /usr/local/etc/php/conf.d/custom.ini
 
+
+RUN curl https://frankenphp.dev/install.sh | sh \
+    && mv frankenphp /usr/local/bin
+
 USER $user

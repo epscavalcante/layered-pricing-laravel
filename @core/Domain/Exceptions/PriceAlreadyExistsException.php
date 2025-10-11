@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Src\Domain\Exceptions;
 
-class PriceAlreadExistsException extends AlreadyExistsException
+class PriceAlreadyExistsException extends AlreadyExistsException
 {
     public function __construct()
     {

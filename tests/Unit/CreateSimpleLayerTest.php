@@ -5,7 +5,7 @@ use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayer;
 use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayerInput;
 use Src\Application\UseCases\CreateLayer\CreateSimpleLayer\CreateSimpleLayerOutput;
 use Src\Domain\Entities\Layer;
-use Src\Domain\Exceptions\LayerAlreadExistsException;
+use Src\Domain\Exceptions\LayerAlreadyExistsException;
 
 test('Deve criar uma layer base', function () {
     $input = new CreateSimpleLayerInput(
@@ -44,4 +44,4 @@ test('Deve falhar ao criar uma que ja existe uma layer', function () {
     $createLayer->execute(
         input: $input
     );
-})->throws(LayerAlreadExistsException::class, 'Layer already exists');
+})->throws(LayerAlreadyExistsException::class, 'Layer already exists');

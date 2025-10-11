@@ -6,7 +6,7 @@ namespace Src\Application\UseCases\CreateLayer\CreateDiscountLayer;
 
 use Src\Application\Repositories\LayerRepository;
 use Src\Domain\Entities\Layer;
-use Src\Domain\Exceptions\LayerAlreadExistsException;
+use Src\Domain\Exceptions\LayerAlreadyExistsException;
 use Src\Domain\Exceptions\LayerNotFoundException;
 use Src\Domain\ValueObjects\LayerId;
 
@@ -20,7 +20,7 @@ class CreateDiscountLayer
     {
         $layerFound = $this->layerRepository->findByCode($input->code);
         if ($layerFound) {
-            throw new LayerAlreadExistsException;
+            throw new LayerAlreadyExistsException;
         }
 
         $parentLayer = $this->layerRepository->findById(LayerId::restore($input->layerId));

@@ -9,7 +9,7 @@ use Src\Application\Repositories\PriceRepository;
 use Src\Application\Repositories\ProductRepository;
 use Src\Domain\Entities\Price;
 use Src\Domain\Exceptions\LayerNotFoundException;
-use Src\Domain\Exceptions\PriceAlreadExistsException;
+use Src\Domain\Exceptions\PriceAlreadyExistsException;
 use Src\Domain\Exceptions\ProductNotFoundException;
 use Src\Domain\Services\PriceCalculator;
 use Src\Domain\ValueObjects\LayerId;
@@ -41,7 +41,7 @@ class PriceCreatorService
         );
 
         if ($priceExists) {
-            throw new PriceAlreadExistsException;
+            throw new PriceAlreadyExistsException;
         }
 
         $price = Price::create(
