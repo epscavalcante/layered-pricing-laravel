@@ -24,7 +24,7 @@ class Layer
     {
         $type = $type ? Type::tryFrom($type) : Type::NORMAL;
         $parentId = $parentId ? LayerId::restore($parentId) : null;
-        $discountRule = $parentId && $discountType && $discountValue
+        $discountRule = $discountType && $discountValue
             ? DiscountRuleFactory::create($discountType, $discountValue)
             : null;
 

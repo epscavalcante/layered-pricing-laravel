@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateBasePriceRequest;
 use App\Http\Requests\CreateDiscountPriceRequest;
+use App\Http\Requests\SimulatePricingRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Src\Application\UseCases\CreateDiscountPrice\CreateDiscountPrice;
@@ -14,6 +15,8 @@ use Src\Application\UseCases\GetPrice\GetPrice;
 use Src\Application\UseCases\GetPrice\GetPriceInput;
 use Src\Application\UseCases\ListPrices\ListPrices;
 use Src\Application\UseCases\ListPrices\ListPricesInput;
+use Src\Application\UseCases\SimulatePricing\SimulatePricing;
+use Src\Application\UseCases\SimulatePricing\SimulatePricingInput;
 
 class PriceController extends Controller
 {
@@ -36,7 +39,7 @@ class PriceController extends Controller
             data: [
                 'total' => $output->total,
                 'items' => array_map(
-                    callback: fn ($item) => [
+                    callback: fn($item) => [
                         'price_id' => $item->priceId,
                         'layer_id' => $item->layerId,
                         'product_id' => $item->productId,
@@ -101,6 +104,25 @@ class PriceController extends Controller
         return response()->json(
             status: 201,
             data: ['price_id' => $output->priceId]
+        );
+    }
+
+    public function simulate(SimulatePricingRequest $request, SimulatePricing $useCase): JsonResponse
+    {
+        $input = new SimulatePricingInput(
+            baseLayerId: $request->validated('base_layer_id'),
+            operation: $request->validated('operation'), // Discount or Increase
+            operationType: $request->validated('operation_type'), // Percentage or Fixed
+            operationValue: $request->validated('operation_value'),
+        );
+
+        $output = $useCase->execute(
+            input: $input,
+        );
+
+        return response()->json(
+            status: 200,
+            data: $output->items
         );
     }
 }
