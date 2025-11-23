@@ -28,6 +28,7 @@ Route::controller(PriceController::class)
     ->name('prices.')
     ->group(function () {
         Route::get('/', 'list')->name('list');
+        Route::get('/simulate', 'simulate')->name('simulate');
         Route::get('/{price_id}', 'show')->name('show');
         Route::post('/simple', 'storeSimple')->name('store_simple');
         Route::post('/discount', 'storeDiscount')->name('store_discount');
