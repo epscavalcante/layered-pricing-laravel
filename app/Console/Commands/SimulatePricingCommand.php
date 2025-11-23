@@ -55,13 +55,14 @@ class SimulatePricingCommand extends Command
         $operationValue = (int) text(
             label: 'Operation Value',
             required: true,
-            validate: function ($value) use ($operationMethodSelected, $operationMethodTypeSelected) {
-                if (!is_numeric($value) || (int) $value <= 0) {
+            validate: function ($value) use ($operationMethodTypeSelected) {
+                if (! is_numeric($value) || (int) $value <= 0) {
                     return 'O valor deve ser um número maior que zero.';
                 }
-                if ($operationMethodTypeSelected === DiscountType::PERCENTAGE->value && ((int)$value > 100)) {
+                if ($operationMethodTypeSelected === DiscountType::PERCENTAGE->value && ((int) $value > 100)) {
                     return 'O valor percentual não pode ser maior que 100.';
                 }
+
                 return null;
             },
         );
@@ -86,7 +87,7 @@ class SimulatePricingCommand extends Command
         table(
             headers: ['Product Name', 'Original Value', 'Operation', 'Operation Type', 'Value to Operate', 'Final value'],
             rows: array_map(
-                callback: fn($item) => [
+                callback: fn ($item) => [
                     $item['product_name'],
                     $item['original_value'],
                     $item['operation'],
@@ -126,13 +127,14 @@ class SimulatePricingCommand extends Command
         $operationValue = (int) text(
             label: 'Operation Value',
             required: true,
-            validate: function ($value) use ($operationMethodSelected, $operationMethodTypeSelected) {
-                if (!is_numeric($value) || (int) $value <= 0) {
+            validate: function ($value) use ($operationMethodTypeSelected) {
+                if (! is_numeric($value) || (int) $value <= 0) {
                     return 'O valor deve ser um número maior que zero.';
                 }
-                if ($operationMethodTypeSelected === DiscountType::PERCENTAGE->value && ((int)$value > 100)) {
+                if ($operationMethodTypeSelected === DiscountType::PERCENTAGE->value && ((int) $value > 100)) {
                     return 'O valor percentual não pode ser maior que 100.';
                 }
+
                 return null;
             },
         );
@@ -159,6 +161,7 @@ class SimulatePricingCommand extends Command
                 discountType: $operationMethodTypeSelected,
                 discountValue: $operationValue
             );
+
             return $price;
         })->toArray();
         table(

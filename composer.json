@@ -9,6 +9,7 @@
         "php": "^8.2",
         "laravel/framework": "^12.0",
         "laravel/octane": "^2.13",
+        "laravel/pint": "^1.25",
         "laravel/prompts": "^0.3.7",
         "laravel/tinker": "^2.10.1",
         "ramsey/identifier": "^0.1.0"
@@ -16,7 +17,6 @@
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "laravel/pail": "^1.2.2",
-        "laravel/pint": "^1.24",
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
