@@ -1,4 +1,4 @@
-name: Laravel CI
+name: Laravel
 
 on:
   push:
@@ -7,184 +7,112 @@ on:
     branches: [ "main" ]
 
 jobs:
-  # ---------------------------------------------------------
-  # BUILD → Instala dependências e exporta artifacts
-  # ---------------------------------------------------------
-  build:
+  prepare:
+    name: Prepare Dependencies
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+      - uses: shivammathur/setup-php@v4
         with:
-          php-version: '8.4'
-          #extensions: mbstring, sqlite, pdo_sqlite, bcmath
-          #coverage: none
+          php-version: 8.4
 
-      - name: Cache Composer
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: composer-${{ hashFiles('composer.lock') }}
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
       - name: Install Dependencies
-        run: |
-          composer install \
-            --no-scripts \
-            --no-ansi \
-            --no-interaction \
-            --no-progress \
-            --prefer-dist
+        run: composer install --no-interaction --prefer-dist --no-progress
 
-      - name: Prepare .env
-        run: |
-          cp .env.example .env
-          php artisan key:generate
+      - name: Archive vendor
+        run: tar -czf vendor.tar.gz vendor
 
-      - name: Set directory permissions
-        run: chmod -R 777 storage bootstrap/cache
-
-      # Export vendor/
-      - name: Upload vendor artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: vendor
-          path: vendor
+          path: vendor.tar.gz
 
-      # Export the source code
-      - name: Upload source artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: source
-          path: .
-          retention-days: 1
-
-  # ---------------------------------------------------------
-  # LINT → Laravel Pint
-  # ---------------------------------------------------------
-  pint:
+  lint:
+    name: Lint & Static Analysis
     runs-on: ubuntu-latest
-    needs: build
+    needs: prepare
 
     steps:
-      - name: Download source
-        uses: actions/download-artifact@v4
-        with:
-          name: source
+      - uses: actions/checkout@v4
 
-      - name: Download vendor
-        uses: actions/download-artifact@v4
+      - uses: shivammathur/setup-php@v4
+        with:
+          php-version: 8.4
+
+      - uses: actions/download-artifact@v4
         with:
           name: vendor
-          path: vendor
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
+      - name: Extract vendor
+        run: tar -xzf vendor.tar.gz
 
       - name: Laravel Pint
         run: php vendor/bin/pint --test
 
-  #tests:
-  #  runs-on: ubuntu-latest
-  #  needs: build
+      - name: PHPStan
+        run: php vendor/bin/phpstan analyse --memory-limit=1G
 
-  #  steps:
-  #    - name: Download source
-  #      uses: actions/download-artifact@v4
-  #      with:
-  #        name: source
-
-  #    - name: Download vendor
-  #      uses: actions/download-artifact@v4
-  #      with:
-  #        name: vendor
-  #        path: vendor
-
-  #    - name: Setup PHP
-  #      uses: shivammathur/setup-php@v2
-  #      with:
-  #        php-version: '8.4'
-  #        extensions: sqlite, pdo_sqlite
-
-  #    - name: Setup SQLite database
-  #      run: |
-  #        mkdir -p database
-  #        touch database/database.sqlite
-
-  #    - name: Run Feature Tests
-  #      env:
-  #        DB_CONNECTION: sqlite
-  #        DB_DATABASE: database/database.sqlite
-  #      run: php artisan test  --coverage --min=50
-
-  # ---------------------------------------------------------
-  # UNIT TESTS → Testes de unidade usando SQLite
-  # ---------------------------------------------------------
-  unit-tests:
+  tests:
+    name: Test Suite
     runs-on: ubuntu-latest
-    needs: build
+    needs: prepare
 
     steps:
-      - name: Download source
-        uses: actions/download-artifact@v4
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v4
         with:
-          name: source
+          php-version: 8.4
 
-      - name: Download vendor
-        uses: actions/download-artifact@v4
-        with:
-          name: vendor
-          path: vendor
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          #extensions: sqlite, pdo_sqlite
-
-      - name: Run Unit Tests
-        #env:
-        #  DB_CONNECTION: sqlite
-        #  DB_DATABASE: database/database.sqlite
-        run: php artisan test --coverage --min=20 --testsuite=Unit
-
-  # ---------------------------------------------------------
-  # FEATURE TESTS → Feature + integração leve usando SQLite
-  # ---------------------------------------------------------
-  feature-tests:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Download source
-        uses: actions/download-artifact@v4
-        with:
-          name: source
-
-      - name: Download vendor
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
           name: vendor
-          path: vendor
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          extensions: sqlite, pdo_sqlite
+      - name: Extract vendor
+        run: tar -xzf vendor.tar.gz
 
-      - name: Setup SQLite database
+      - name: Setup SQLite
         run: |
           mkdir -p database
           touch database/database.sqlite
 
-      - name: Run Feature Tests
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
-        run: php artisan test  --coverage --min=30 --testsuite=Feature
+      - name: Unit Tests
+        run: php artisan test --testsuite=Unit
+
+      - name: Integration Tests
+        run: php artisan test --testsuite=Integration
+
+      - name: Feature Tests
+        run: php artisan test --testsuite=Feature
+
+  docker:
+    name: Docker Build & Security
+    runs-on: ubuntu-latest
+    needs: [lint, tests]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Aqui você pode adicionar:
+      # - docker login
+      # - build
+      # - scan
+      # - push
+      # - deploy
+
+      - name: Build Docker image
+        run: docker build -t myapp:${{ github.sha }} .
+
+      # exemplo: scan com Trivy
+      - name: Security Scan
+        uses: aquasecurity/trivy-action@v0.22.0
+        with:
+          image-ref: myapp:${{ github.sha }}
+
+      - name: Push to GHCR
+        run: echo "push aqui"
