@@ -1,0 +1,59 @@
+# ============================================
+# Arquivos e diretórios irrelevantes no build
+# ============================================
+
+# Dependências locais — serão instaladas dentro do container
+/node_modules
+/vendor
+
+# Artefatos de Build
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.tsbuildinfo
+
+# Laravel caches locais
+/storage/*.key
+/storage/app/*.*
+/storage/app/public/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/storage/logs/*
+
+# Ambiente / secrets locais
+.env
+.env.*
+.envrc
+
+# Configurações da IDE
+/.idea
+/.vscode
+/.phpunit.result.cache
+
+# Arquivos de sistema/máquina
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker (mas deixe o dockerfile)
+docker-compose.yml
+docker-compose.override.yml
+
+# Testes (não necessários em prod)
+tests
+phpunit.xml
+phpunit.xml.dist
+phpunit.result.cache
+
+# Mais algum lixo comum
+*.swp
+*.swo
+*.bak
+*.tmp
