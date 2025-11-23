@@ -33,7 +33,7 @@ jobs:
       - name: Install Dependencies
         run: |
           composer install \
-            --no-sripts \
+            --no-scripts \
             --no-ansi \
             --no-interaction \
             --no-progress \
