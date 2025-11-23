@@ -89,6 +89,39 @@ jobs:
       - name: Laravel Pint
         run: php vendor/bin/pint --test
 
+  #tests:
+  #  runs-on: ubuntu-latest
+  #  needs: build
+
+  #  steps:
+  #    - name: Download source
+  #      uses: actions/download-artifact@v4
+  #      with:
+  #        name: source
+
+  #    - name: Download vendor
+  #      uses: actions/download-artifact@v4
+  #      with:
+  #        name: vendor
+  #        path: vendor
+
+  #    - name: Setup PHP
+  #      uses: shivammathur/setup-php@v2
+  #      with:
+  #        php-version: '8.4'
+  #        extensions: sqlite, pdo_sqlite
+
+  #    - name: Setup SQLite database
+  #      run: |
+  #        mkdir -p database
+  #        touch database/database.sqlite
+
+  #    - name: Run Feature Tests
+  #      env:
+  #        DB_CONNECTION: sqlite
+  #        DB_DATABASE: database/database.sqlite
+  #      run: php artisan test  --coverage --min=50
+
   # ---------------------------------------------------------
   # UNIT TESTS → Testes de unidade usando SQLite
   # ---------------------------------------------------------
@@ -118,7 +151,7 @@ jobs:
         #env:
         #  DB_CONNECTION: sqlite
         #  DB_DATABASE: database/database.sqlite
-        run: php artisan test --testsuite=Unit
+        run: php artisan test --coverage --min=20 --testsuite=Unit
 
   # ---------------------------------------------------------
   # FEATURE TESTS → Feature + integração leve usando SQLite
@@ -154,4 +187,4 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
-        run: php artisan test --testsuite=Feature
+        run: php artisan test  --coverage --min=30 --testsuite=Feature
