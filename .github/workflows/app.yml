@@ -1,4 +1,4 @@
-name: Laravel
+name: Laravel CI
 
 on:
   push:
@@ -7,34 +7,151 @@ on:
     branches: [ "main" ]
 
 jobs:
-  laravel-tests:
-
+  # ---------------------------------------------------------
+  # BUILD → Instala dependências e exporta artifacts
+  # ---------------------------------------------------------
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
-      with:
-        php-version: '8.4'
-    - uses: actions/checkout@v4
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-    - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    - name: Generate key
-      run: php artisan key:generate
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Directory Permissions
-      run: chmod -R 777 storage bootstrap/cache
+      - name: Setup PHP
+        uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+        with:
+          php-version: '8.4'
+          #extensions: mbstring, sqlite, pdo_sqlite, bcmath
+          #coverage: none
 
-    - name: Laravel Pint
-      run: vendor/bin/pint --test
+      - name: Cache Composer
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('composer.lock') }}
 
-    - name: Create Database
-      run: |
-        mkdir -p database
-        touch database/database.sqlite
-    - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
-      run: php artisan test
+      - name: Install Dependencies
+        run: |
+          composer install \
+            --no-sripts \
+            --no-ansi \
+            --no-interaction \
+            --no-progress \
+            --prefer-dist
+
+      - name: Prepare .env
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Set directory permissions
+        run: chmod -R 777 storage bootstrap/cache
+
+      # Export vendor/
+      - name: Upload vendor artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vendor
+          path: vendor
+
+      # Export the source code
+      - name: Upload source artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: source
+          path: .
+          retention-days: 1
+
+  # ---------------------------------------------------------
+  # LINT → Laravel Pint
+  # ---------------------------------------------------------
+  pint:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Download source
+        uses: actions/download-artifact@v4
+        with:
+          name: source
+
+      - name: Download vendor
+        uses: actions/download-artifact@v4
+        with:
+          name: vendor
+          path: vendor
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+
+      - name: Laravel Pint
+        run: vendor/bin/pint --test
+
+  # ---------------------------------------------------------
+  # UNIT TESTS → Testes de unidade usando SQLite
+  # ---------------------------------------------------------
+  unit-tests:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Download source
+        uses: actions/download-artifact@v4
+        with:
+          name: source
+
+      - name: Download vendor
+        uses: actions/download-artifact@v4
+        with:
+          name: vendor
+          path: vendor
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          #extensions: sqlite, pdo_sqlite
+
+      - name: Run Unit Tests
+        #env:
+        #  DB_CONNECTION: sqlite
+        #  DB_DATABASE: database/database.sqlite
+        run: php artisan test --testsuite=Unit
+
+  # ---------------------------------------------------------
+  # FEATURE TESTS → Feature + integração leve usando SQLite
+  # ---------------------------------------------------------
+  feature-tests:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Download source
+        uses: actions/download-artifact@v4
+        with:
+          name: source
+
+      - name: Download vendor
+        uses: actions/download-artifact@v4
+        with:
+          name: vendor
+          path: vendor
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: sqlite, pdo_sqlite
+
+      - name: Setup SQLite database
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
+
+      - name: Run Feature Tests
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: php artisan test --testsuite=Feature
