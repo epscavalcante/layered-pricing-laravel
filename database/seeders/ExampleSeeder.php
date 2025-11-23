@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Layer;
 use App\Models\Price;
 use App\Models\Product;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Src\Domain\Enums\DiscountType;
 
@@ -41,7 +40,6 @@ class ExampleSeeder extends Seeder
             ->for($baseLayerCheckout, 'parent')
             ->discountable(DiscountType::PERCENTAGE, 2)
             ->create(['code' => 'DISCOUNT_PERCENTAGE_TO_BASE_CHECKOUT']);
-
 
         foreach ($materials as $material) {
             foreach ($locations as $location) {
@@ -97,7 +95,7 @@ class ExampleSeeder extends Seeder
                                 Price::factory()->create([
                                     'layer_id' => $discountFixedToCheckoutLayer->id,
                                     'product_id' => $product->id,
-                                    'value' => $basePriceCheckout->value  - $discountFixedToCheckoutLayer->discount_value,
+                                    'value' => $basePriceCheckout->value - $discountFixedToCheckoutLayer->discount_value,
                                 ]);
                             }
                         }

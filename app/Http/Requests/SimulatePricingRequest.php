@@ -23,8 +23,8 @@ class SimulatePricingRequest extends FormRequest
     {
         return [
             'base_layer_id' => ['required', 'string'],
-            'operation' => ['required', 'string',],
-            'operation_type' => ['required', 'string',],
+            'operation' => ['required', 'string'],
+            'operation_type' => ['required', 'string'],
             'operation_value' => ['required', 'numeric', 'min:0'],
         ];
     }

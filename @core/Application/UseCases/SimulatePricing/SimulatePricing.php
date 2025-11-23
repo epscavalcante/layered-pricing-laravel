@@ -23,7 +23,7 @@ final class SimulatePricing
     {
         $baseLayerId = $this->layerRepository->findById(LayerId::restore($input->baseLayerId));
         if (is_null($baseLayerId)) {
-            throw new LayerNotFoundException();
+            throw new LayerNotFoundException;
         }
 
         $listPriceQueryInput = new ListPriceQueryInput(
@@ -47,6 +47,7 @@ final class SimulatePricing
                     discountType: $input->operationType,
                     discountValue: $input->operationValue,
                 );
+
                 return [
                     'product_name' => $price->productName,
                     'original_value' => $price->value,

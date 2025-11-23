@@ -39,7 +39,7 @@ class PriceController extends Controller
             data: [
                 'total' => $output->total,
                 'items' => array_map(
-                    callback: fn($item) => [
+                    callback: fn ($item) => [
                         'price_id' => $item->priceId,
                         'layer_id' => $item->layerId,
                         'product_id' => $item->productId,

@@ -3,6 +3,10 @@
 # -------------------------------------------------------
 FROM dunglas/frankenphp:1-php8.4
 
+# set your user name, ex: user=ourname
+ARG user=application
+ARG uid=1000
+
 # -------------------------------------------------------
 # Instalar dependências do sistema (APT, não APK)
 # -------------------------------------------------------
@@ -37,11 +41,26 @@ RUN install-php-extensions \
 # -------------------------------------------------------
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+RUN useradd -G www-data,root -u $uid -d /home/$user $user
+RUN mkdir -p /home/$user/.composer && \
+    chown -R $user:$user /home/$user
+
 # -------------------------------------------------------
 # Configurar diretório da aplicação
 # -------------------------------------------------------
-WORKDIR /var/www
 #COPY . .
+
+# Install redis
+# RUN pecl install -o -f redis \
+#     &&  rm -rf /tmp/pear \
+#     &&  docker-php-ext-enable redis
+
+
+# Enable xDebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug && \
+    echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+WORKDIR /var/www
 
 # Permissões (ambiente de desenvolvimento)
 #RUN chmod -R 777 storage bootstrap/cache
@@ -54,7 +73,12 @@ WORKDIR /var/www
 # -------------------------------------------------------
 # Expor porta padrão
 # -------------------------------------------------------
-EXPOSE 8000
+# EXPOSE 8000
+
+COPY ./php.ini /usr/local/etc/php/conf.d/custom.ini
+
+
+USER $user
 
 # -------------------------------------------------------
 # Rodar Octane com FrankenPHP em modo dev (watch)
