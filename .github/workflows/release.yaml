@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - "v*.*.*"  # dispara somente quando o auto-tag gerar nova tag
+      - "v*.*.*"
 
 permissions:
   contents: read
