@@ -1,0 +1,54 @@
+name: Deploy
+
+on:
+  workflow_dispatch:  # workflow manual
+  release:
+    types: [published] # garante que prod só é possível após release
+
+jobs:
+  # ===============================
+  # 1️⃣ Deploy para DEV (manual)
+  # ===============================
+  deploy_dev:
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Pull prebuilt Docker image
+        run: |
+          IMAGE_ID="meu-registry/minha-app:latest"
+          echo "Pulling image $IMAGE_ID..."
+          docker pull $IMAGE_ID
+
+      - name: Manual Deploy to DEV
+        run: |
+          echo "Deploying image $IMAGE_ID to DEV..."
+          sleep 5
+          echo "DEV deployed successfully!"
+
+  # ===============================
+  # 2️⃣ Deploy para PROD (manual, depende de DEV e release)
+  # ===============================
+  deploy_prod:
+    needs: deploy_dev
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    environment:
+      name: production  # configure required reviewers no GitHub se quiser aprovação
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Pull prebuilt Docker image for Release
+        run: |
+          IMAGE_ID="meu-registry/minha-app:${{ github.event.release.tag_name }}"
+          echo "Pulling image $IMAGE_ID..."
+          docker pull $IMAGE_ID
+
+      - name: Manual Deploy to PROD
+        run: |
+          echo "Deploying image $IMAGE_ID to PROD..."
+          sleep 5
+          echo "PROD deployed successfully!"
