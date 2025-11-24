@@ -5,6 +5,9 @@ on:
     workflows: ["Release"]
     types:
       - completed
+    branches:
+      - main
+    conclusion: success
 
 jobs:
   # ===============================
