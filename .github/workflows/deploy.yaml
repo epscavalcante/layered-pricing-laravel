@@ -1,13 +1,8 @@
 name: Deploy
 
-#on:
-#  workflow_dispatch:  # workflow manual
-#  release:
-#    types: [published] # garante que prod só é possível após release
-
 on:
   workflow_run:
-    workflows: ["Release"]   # Nome *exato* do workflow de tag
+    workflows: ["Release"]
     types:
       - completed
 
@@ -16,8 +11,9 @@ jobs:
   # 1️⃣ Deploy para DEV (manual)
   # ===============================
   deploy_dev:
-    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
     runs-on: ubuntu-latest
+    environment:
+      name: dev
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -28,32 +24,32 @@ jobs:
           echo "Pulling image $IMAGE_ID..."
           docker pull $IMAGE_ID
 
-      - name: Manual Deploy to DEV
+      - name: Deploy to DEV
         run: |
           echo "Deploying image $IMAGE_ID to DEV..."
           sleep 5
           echo "DEV deployed successfully!"
 
   # ===============================
-  # 2️⃣ Deploy para PROD (manual, depende de DEV e release)
+  # 2️⃣ Deploy para PROD (depende de DEV)
   # ===============================
   deploy_prod:
     needs: deploy_dev
-    if: github.event_name == 'release'
     runs-on: ubuntu-latest
     environment:
-      name: production  # configure required reviewers no GitHub se quiser aprovação
+      name: prod
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Pull prebuilt Docker image for Release
         run: |
-          IMAGE_ID="meu-registry/minha-app:${{ github.event.release.tag_name }}"
+          IMAGE_TAG="${{ github.event.workflow_run.head_commit.message }}" # ajustar conforme necessário
+          IMAGE_ID="meu-registry/minha-app:${IMAGE_TAG}"
           echo "Pulling image $IMAGE_ID..."
           docker pull $IMAGE_ID
 
-      - name: Manual Deploy to PROD
+      - name: Deploy to PROD
         run: |
           echo "Deploying image $IMAGE_ID to PROD..."
           sleep 5
