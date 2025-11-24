@@ -22,9 +22,11 @@ jobs:
 
       - name: Determine bump type from Conventional Commits
         id: cc
-        uses: conventional-commits/conventional-commits-action@v1
+        uses: TriPSs/conventional-changelog-action@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          skip-version-file: "true"
+          output-file: "false"
 
       - name: Show detected bump type
         run: echo "Version bump type = ${{ steps.cc.outputs.bump }}"
