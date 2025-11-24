@@ -5,6 +5,9 @@ on:
     workflows: ["CI"]
     types:
       - completed
+    branches:
+      - main
+    conclusion: success
 
 permissions:
   contents: write
