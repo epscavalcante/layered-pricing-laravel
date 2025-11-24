@@ -1,9 +1,15 @@
 name: Deploy
 
+#on:
+#  workflow_dispatch:  # workflow manual
+#  release:
+#    types: [published] # garante que prod só é possível após release
+
 on:
-  workflow_dispatch:  # workflow manual
-  release:
-    types: [published] # garante que prod só é possível após release
+  workflow_run:
+    workflows: ["Release"]   # Nome *exato* do workflow de tag
+    types:
+      - completed
 
 jobs:
   # ===============================
