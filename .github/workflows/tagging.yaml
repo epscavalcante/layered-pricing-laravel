@@ -1,4 +1,4 @@
-name: Auto Tag
+name: Tagging
 
 on:
   workflow_run:

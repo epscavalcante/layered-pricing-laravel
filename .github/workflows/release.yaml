@@ -1,13 +1,10 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - "v*.*.*"
-
-#on:
-#  release:
-#    types: [published]
+  workflow_run:
+    workflows: ["Tagging"]
+    types:
+      - completed
 
 permissions:
   contents: read
