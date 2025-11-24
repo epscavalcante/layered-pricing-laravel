@@ -46,7 +46,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: Dockerfile
+          file: Dockerfile.production
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/layered-pricing-laravel:${{ steps.vars.outputs.version }}
