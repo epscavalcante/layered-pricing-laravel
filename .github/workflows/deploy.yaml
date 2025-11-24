@@ -18,15 +18,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Pull prebuilt Docker image
-        run: |
-          IMAGE_ID="meu-registry/minha-app:latest"
-          echo "Pulling image $IMAGE_ID..."
-          docker pull $IMAGE_ID
-
       - name: Deploy to DEV
         run: |
-          echo "Deploying image $IMAGE_ID to DEV..."
+          echo "Deploying image to DEV..."
           sleep 5
           echo "DEV deployed successfully!"
 
@@ -42,15 +36,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Pull prebuilt Docker image for Release
-        run: |
-          IMAGE_TAG="${{ github.event.workflow_run.head_commit.message }}" # ajustar conforme necessário
-          IMAGE_ID="meu-registry/minha-app:${IMAGE_TAG}"
-          echo "Pulling image $IMAGE_ID..."
-          docker pull $IMAGE_ID
-
       - name: Deploy to PROD
         run: |
-          echo "Deploying image $IMAGE_ID to PROD..."
+          echo "Deploying image to PROD..."
           sleep 5
           echo "PROD deployed successfully!"
