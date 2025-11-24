@@ -25,3 +25,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_PREFIX: v
+          GIT_API_TAGGING: false
