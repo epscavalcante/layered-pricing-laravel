@@ -8,7 +8,7 @@ on:
 
 jobs:
   # ===============================
-  # 1️⃣ Deploy para DEV (manual)
+  # 1️⃣ Deploy para DEV
   # ===============================
   deploy_dev:
     runs-on: ubuntu-latest
@@ -25,7 +25,7 @@ jobs:
           echo "DEV deployed successfully!"
 
   # ===============================
-  # 2️⃣ Deploy para PROD (depende de DEV)
+  # 2️⃣ Deploy para PROD
   # ===============================
   deploy_prod:
     needs: deploy_dev
