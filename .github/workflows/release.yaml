@@ -5,8 +5,6 @@ on:
     workflows: ["Tagging"]   # Nome *exato* do workflow de tag
     types:
       - completed
-    branches:
-      - main
     conclusion: success
 
 permissions:
