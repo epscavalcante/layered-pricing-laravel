@@ -5,13 +5,15 @@ on:
     workflows: ["Release"]
     types:
       - completed
-    conclusion: success
+      # note: `conclusion` is not a valid top-level key for workflow_run
+      # jobs will verify event, head_branch and conclusion
 
 jobs:
   # ===============================
   # 1️⃣ Deploy para DEV
   # ===============================
   deploy_dev:
+    if: ${{ github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     environment:
       name: dev
@@ -30,6 +32,7 @@ jobs:
   # ===============================
   deploy_prod:
     needs: deploy_dev
+    if: ${{ github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     environment:
       name: prod

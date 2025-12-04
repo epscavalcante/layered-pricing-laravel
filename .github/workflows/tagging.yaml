@@ -5,14 +5,15 @@ on:
     workflows: ["CI"]
     types:
       - completed
-    conclusion: success
+      # note: `conclusion` is not a valid top-level key for workflow_run
+      # we'll check conclusion and event in the job `if` condition below
 
 permissions:
   contents: write
 
 jobs:
   tag:
-    if: github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.conclusion == 'success'
+    if: ${{ github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
